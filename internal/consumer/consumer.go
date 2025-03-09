@@ -5,7 +5,7 @@ import (
 )
 
 func SerialConsumer(weatherChan <-chan models.WeatherModel, resultChan chan<- WeatherSummary) {
-	compWeather := newEmptyWeatherSummary()
+	compWeather := NewEmptyWeatherSummary()
 	for weather := range weatherChan {
 		avgTemp := weather.CalAvgTemp()
 		fogOcc, clearOcc := weather.CheckWeaterCodes()
@@ -27,4 +27,10 @@ func SerialConsumer(weatherChan <-chan models.WeatherModel, resultChan chan<- We
 	}
 
 	resultChan <- compWeather
+}
+
+func ConcurentConsumer(weatherChan <-chan models.WeatherModel, compWeather *WeatherSummary) {
+	for weather := range weatherChan {
+		compWeather.checkSummary(weather)
+	}
 }

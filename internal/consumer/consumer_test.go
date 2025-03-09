@@ -1,6 +1,7 @@
 package consumer
 
 import (
+	"sync"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -37,4 +38,28 @@ func TestSerialConsumer(t *testing.T) {
 	close(chanWeather)
 	result := <-chanResult
 	assert.Equal(t, weatherSummaryExp, result)
+}
+
+func TestConcurentConsumer(t *testing.T) {
+	prodNumber := 2
+
+	var wg sync.WaitGroup
+	weatherSummary := NewEmptyWeatherSummary()
+
+	chanWeather := make(chan models.WeatherModel, prodNumber)
+
+	for range prodNumber {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			ConcurentConsumer(chanWeather, &weatherSummary)
+		}()
+	}
+	chanWeather <- weatherExample1
+	chanWeather <- weatherExample2
+	close(chanWeather)
+
+	wg.Wait()
+	assert.Equal(t, weatherSummaryExp, weatherSummary)
+
 }
