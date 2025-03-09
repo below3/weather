@@ -80,7 +80,7 @@ func ConcurentProducer[consType AcceptedConsTypes](i int, filePath string, weath
 		filePart -= int64(len(s.Bytes())) + 1
 	}
 
-	for readBytes < filePart {
+	for readBytes <= filePart {
 		s.Scan()
 		var weather consType
 		currScan := s.Bytes()
