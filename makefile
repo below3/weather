@@ -1,5 +1,5 @@
 run:
-	go run cmd/weatherapp/main.go $(prod)
+	go run cmd/weatherapp/main.go $(cons) $(prod)
 
 benchmark:
 	go test cmd/weatherapp/main_test.go  -bench=.

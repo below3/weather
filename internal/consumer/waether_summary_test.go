@@ -7,7 +7,7 @@ import (
 	"github.com/weather/weather/internal/models"
 )
 
-func Test_checkSummary(t *testing.T) {
+func TestCheckSummary(t *testing.T) {
 	weather1 := models.WeatherModel{
 		City:        "Byd",
 		Temperature: []float64{1, 2, 3, 4, 5},

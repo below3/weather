@@ -7,13 +7,13 @@ import (
 )
 
 type WeatherSummary struct {
-	Mu             sync.Mutex
-	TempCity       string
-	TempAvg        float64
-	FogCity        string
-	FogOccurance   int16
-	ClearCity      string
-	ClearOccurance int16
+	Mu             sync.Mutex `json:"-"`
+	TempCity       string     `json:"bestTempCity"`
+	TempAvg        float64    `json:"bestTempAvg"`
+	FogCity        string     `json:"bestFogCity"`
+	FogOccurance   int16      `json:"fogOccurance"`
+	ClearCity      string     `json:"bestClearCity"`
+	ClearOccurance int16      `json:"clearOccurance"`
 }
 
 func NewEmptyWeatherSummary() WeatherSummary {
